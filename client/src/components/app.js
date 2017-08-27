@@ -5,6 +5,8 @@ import * as Cookies from 'js-cookie';
 //import SignOut from './sign-out';
 //import AppInfo from './app-info';
 import CreateJob from './create';
+import ListJobs from './list';
+import UpdateJob from './update';
 import GoogleSignIn from './welcome';
 import {getUser} from '../actions';
 
@@ -16,24 +18,39 @@ class App extends React.Component {
             this.props.dispatch(getUser(accessToken));
         }
     }
-    render() {
+    render() { 
+        return
+     
+        let section;
         if (!this.props.currentUser) {
-            return (
+           section= (
                 <section className="login-page">
-            
-             
-                    <GoogleSignIn />
+              <GoogleSignIn />
                 </section>
             );
-        }
-        return (
-            <section className="create-page">
+        } else
+        section=(
+            <section className="CreateJob">
              
-                <CreateJob />
-  
+                <CreateJob/>
+                <ListJobs/>
+                <UpdateJob/>
+
             </section>
         );
-    }
+
+//      return (<nav>
+//     <div class="nav-wrapper">
+//       <a href="#" class="brand-logo">Logo</a>
+//       <ul id="nav-mobile" class="right hide-on-med-and-down">
+//         <li><a href="sass.html">Sass</a></li>
+//         <li><a href="badges.html">Components</a></li>
+//         <li><a href="collapsible.html">JavaScript</a></li>
+//       </ul>
+//     </div>
+//     {section}
+//   </nav>)
+        }
 }
 const mapStateToProps=state=>({
     currentUser: state.currentUser,

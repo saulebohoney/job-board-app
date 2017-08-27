@@ -39,3 +39,45 @@ export const getUser=(accessToken)=>dispatch=>{
             dispatch(rejectGetUser(error));
         });
 };
+
+export const CREATE_JOB='CREATE_JOB';
+export const createJob=(job)=>({
+    type: CREATE_JOB,
+    job
+});
+
+export const UPDATE_JOB='UPDATE_JOB';
+export const updateJob=(job)=>({
+    type: UPDATE_JOB,
+    job
+});
+
+export const SELECT_JOB='SELECT_JOB';
+export const selectJob=(job)=>({
+    type: SELECT_JOB,
+    job
+});
+
+export const DELETE_JOB='DELETE_JOB';
+export const deleteJob=(job)=>({
+    type: DELETE_JOB,
+    job
+});
+
+export const FETCH_JOBS_REQUEST='FETCH_JOBS_REQUEST';
+export const fetchJob=(job)=>({
+    type:FETCH_JOBS_REQUEST,
+    job
+});
+
+export const FETCH_JOBS_SUCCESS='FETCH_JOBS_SUCCESS';
+export const fetchJobSucces=(job)=>({
+    type:FETCH_JOBS_SUCCESS,
+    job
+});
+
+export const FETCH_JOBS_ERROR='FETCH_JOBS_ERROR';
+export const fetchJobError=(job)=>({
+    type:FETCH_JOBS_ERROR,
+    job
+});
