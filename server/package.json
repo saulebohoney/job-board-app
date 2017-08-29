@@ -1,0 +1,21 @@
+{
+  "name": "job-board-app",
+  "version": "1.0.0",
+  "description": "building job-board-app",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js"
+  },
+  "author": "saule",
+  "license": "ISC",
+ 
+  "devDependencies": {
+    "nodemon": "^1.11.0"
+  },
+  "dependencies":{
+    "passport": "^0.4.0",
+    "passport-google-oauth20": "^1.0.0",
+    "passport-http-bearer": "^1.0.1",
+     "express": "^4.15.4"
+  }
+}
