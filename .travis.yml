@@ -1,2 +1,9 @@
 language: node_js
 node_js: node
+deploy:
+  provider: heroku
+  api_key:
+    secure: cFCr49iExgx0pQAqPl6NFUXMRgDQU+ZnyuLFr4PbRF+FA0WrHq5cQ6KtIpmatBBS4mqs+e6zy0haLmdRATrO+jDnAqFqwy143k55O2vUHM6/Z3P4GRO9gVm00SgYw4qpz/4AYaLYsQVi49MKjX+xaGOIU8N0XRRIXVozidBaMwsvrQFh4a3kKHgUcKCKKy1XG/N4o0Z7xM4InkbIO+5RxKLf0vUtMMBnIDhiNAvNXQ0p1LVnowYg6Q93GiuYJSUMX0smJh7VDJH4YKZet1DC1t4jRjtnBXKT2r5c9t3CEsOjzOY86NHyE9X9av/zSSVj1GBBUh4fYaajl+kkUoJX2gXNPTvcRHE79HM7FhhXHGRwAjH1xQnYaw4vB9I9gleeAOliaYt+a0GbrMaBC7tcOTXGplK2jh/6LhqD/SYCNaKPSZ5XYHawbfdIUsBoQkfCq2hSsUJPb8q0TGcVabxUJsViGrTxV2RVr2M+zdukQw7MS6NBadhPigdGGFy9QvmEPAxoDudMp72RxvJi7lluWiIDc4kd1CPRJ4EvkVda9h5H43eKtGfY4xc2HccKOyqAD5J1/ql+jYOADQAziyhUMGBIx3vDwBILWb+90VoqLG+grdm5QV1wqlek4W6d3Q7XClo7fH0F+QpuEV5pJVMjW1cI1gIZz5sIDHIFNYuZskI=
+  app: young-oasis-34350
+  on:
+    repo: saulebohoney/job-board-app
