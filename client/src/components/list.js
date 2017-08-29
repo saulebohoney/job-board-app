@@ -3,10 +3,17 @@ import './css/create.css';
 import * as actions from '../actions';
 import {connect} from 'react-redux';
 
+
+
 export class ListJobs extends React.Component {
+//this.context.router.transitionTo(e.target.href)
 
     updateJob(job){
-        this.props.dispatch(actions.selectJob(job));
+        this.props.dispatch(actions.selectJob(job))
+        console.log(job);
+      
+        this.props.history.push('/update');
+       
     }
     
     render () { 
@@ -19,8 +26,9 @@ export class ListJobs extends React.Component {
 
         jobs= this.props.jobs.map (function (job) {
        return (
+           
                <li> {job.position} 
-               <button type="button" value="text" onClick={updateJob.bind(thisClass,job)}>update</button> 
+               <button type="button" value="text" onClick={updateJob.bind(thisClass,job)}>Update</button> 
                </li>     
        )   
         })
@@ -33,6 +41,7 @@ export class ListJobs extends React.Component {
     }
 
 }
+
 
 
 const mapStateToProps=state=>({

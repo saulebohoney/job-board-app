@@ -16,18 +16,18 @@ createJob  (e) {
         Applied:this.Applied.value,
         LastContacted:this.LastContacted.value,
         Link:this.Link.value,
-        ResumeUsed:this.ResumeUsed.value
+        ResumeUsed:this.ResumeUsed.value,
+        Notes:this.Notes.value
     }
     this.props.dispatch(actions.createJob(job));
     console.log(job)
+    this.props.history.push('/list');
 }
 
 
 render() {
     return (
-        <div className="createJob">
-
-            <h3>Create Job </h3>
+        <div className="createJob">       
             <form onSubmit={this.createJob.bind(this)}>
                 <label htmlFor="Position"></label>
                 <input type="text" placeholder="Position"
@@ -75,11 +75,16 @@ render() {
                 <input type="text" placeholder="Resume used"
                 ref={(input) => { this.ResumeUsed= input; }} />
                  <br></br>
+
+                <label htmlFor="Notes"></label>
+                <input type="text" placeholder="Notes"
+                ref={(input) => { this.Notes= input; }} />
+                 <br></br>
   
                <input type="submit" value="Submit"/>
 
+    
                 </form>
-          
                 </div>
     )
 }

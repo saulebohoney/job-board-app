@@ -9,6 +9,9 @@ import ListJobs from './list';
 import UpdateJob from './update';
 import GoogleSignIn from './welcome';
 import {getUser} from '../actions';
+import Home from './home';
+//import {BrowserRouter as Router, Route, Redirect} from 'react-router-dom';
+import { NavLink } from 'react-router-dom'
 
 
 class App extends React.Component {
@@ -18,40 +21,56 @@ class App extends React.Component {
             this.props.dispatch(getUser(accessToken));
         }
     }
-    render() { 
-        return
+    render (){
      
-        let section;
-        if (!this.props.currentUser) {
-           section= (
-                <section className="login-page">
-              <GoogleSignIn />
-                </section>
-            );
-        } else
-        section=(
-            <section className="CreateJob">
-             
-                <CreateJob/>
-                <ListJobs/>
-                <UpdateJob/>
+//         let section;
+//         if (!this.props.currentUser) {
+//            section= (
+//                 <section className="login-page">
+//               <GoogleSignIn />
+//                 </section>
+//             );
+//         } else
+//         section=(
+//             <section className="MainPage">
+//                 <CreateJob/>
+//                 <ListJobs/>
+//                 <UpdateJob/>
 
-            </section>
-        );
-
-//      return (<nav>
+//             </section>
+//         );
+//            return (  <nav>
 //     <div class="nav-wrapper">
-//       <a href="#" class="brand-logo">Logo</a>
-//       <ul id="nav-mobile" class="right hide-on-med-and-down">
-//         <li><a href="sass.html">Sass</a></li>
-//         <li><a href="badges.html">Components</a></li>
-//         <li><a href="collapsible.html">JavaScript</a></li>
+//       <a href="#" class="brand-logo right">Logo</a>
+//       <ul id="nav-mobile" class="left hide-on-med-and-down">
+//         <NavLink to="/create">Create Job</NavLink>
+//         <NavLink to="/">Update Job</NavLink>
+//         <NavLink to ="/submit">Veiw All</NavLink>
 //       </ul>
 //     </div>
 //     {section}
-//   </nav>)
-        }
+//   </nav>
+//         )
+
+
+if (!this.props.currentUser) {
+    return (
+                <section className="login-page">
+              <GoogleSignIn />
+                </section>
+    );
+    }
+
+    return (
+
+            <section className="MainPage">
+             <Home/>  
+                </section>
+        
+    );
+   }
 }
+
 const mapStateToProps=state=>({
     currentUser: state.currentUser,
 });

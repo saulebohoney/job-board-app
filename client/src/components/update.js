@@ -4,36 +4,41 @@ import './css/create.css';
 import * as actions from '../actions';
 import {connect} from 'react-redux';
 
+
+
 export class UpdateJob extends React.Component {
-    // constructor(props) {
-    //     super(props);
-    // }
+  
 updateJob  (e) {
     e.preventDefault()
     let job={
-        position:this.position.value,
+        position:this.positionInput.value,
         JobDescription:this.JobDescription.value,
         Company:this.Company.value,
         NetworkingContact:this.NetworkingContact.value,
         Applied:this.Applied.value,
         LastContacted:this.LastContacted.value,
         Link:this.Link.value,
-        ResumeUsed:this.ResumeUsed.value
+        ResumeUsed:this.ResumeUsed.value,
+        Notes:this.Notes.value
     }
     this.props.dispatch(actions.updateJob(job));
     console.log(job)
+    this.props.history.push('/list');
 }
-componentDidUpdate(){
-   if (this.props.job){ this.positionInput.value= this.props.job.position;
+
+componentDidMount(){
+   if (this.props.job) 
+    { 
+        this.positionInput.value= this.props.job.position;
+        //this.positionInput.value= this.props.job.position;
    }
 }
+
 
 
 render() {
     return (
         <div className="UpdateJob">
-
-            <h3>Update Job </h3>
             <form onSubmit={this.updateJob.bind(this)}>
                 <label htmlFor="Position"></label>
                 <input type="text" placeholder="Position"
@@ -81,8 +86,13 @@ render() {
                 <input type="text" placeholder="Resume used"
                 ref={(input) => { this.ResumeUsed= input; }} />
                  <br></br>
+
+                 <label htmlFor="Notes"></label>
+                <input type="text" placeholder="Notes"
+                ref={(input) => { this.Notes= input; }} />
+                 <br></br>
   
-               <input type="submit" value="Submit"/>
+               <input type="submit" value="Update"/>
 
                 </form>
           

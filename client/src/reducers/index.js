@@ -30,8 +30,8 @@ export const reducer = (state=initialState,action) => {
         });
     case actions.UPDATE_JOB:
         return Object.assign({}, state, {
-            items: state.items.map(item =>
-                item.id === action.item.id ? action.item : item
+            jobs: state.jobs.map(job=>
+                job.id === action.job.id ? action.job : job
             )
         });
     case actions.SELECT_JOB:
