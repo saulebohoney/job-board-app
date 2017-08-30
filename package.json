@@ -24,7 +24,6 @@
     "cross-env": "^5.0.5",
     "express": "^4.15.4",
     "http-proxy-middleware": "^0.17.4",
-    "mongoose": "^4.11.9",
     "npm-run-all": "^4.0.2",
     "xp": "^1.0.1"
   }
