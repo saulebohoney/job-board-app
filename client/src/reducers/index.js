@@ -2,7 +2,8 @@ import * as actions from '../actions';
 
 
 const initialState = {
-    currentUser: {username:'', password:''},
+    // currentUser: {username:'', password:''},
+    currentUser:null,
     getUser: false, //If user tries to use an access token get them
     error: null, //If user has bad credentials reject them
     jobs:[],

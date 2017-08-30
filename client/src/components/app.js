@@ -11,7 +11,6 @@ import GoogleSignIn from './welcome';
 import {getUser} from '../actions';
 import Home from './home';
 //import {BrowserRouter as Router, Route, Redirect} from 'react-router-dom';
-import { NavLink } from 'react-router-dom'
 
 
 class App extends React.Component {
@@ -52,14 +51,14 @@ class App extends React.Component {
 //   </nav>
 //         )
 
-
+console.log(this.props.currentUser);
 if (!this.props.currentUser) {
     return (
                 <section className="login-page">
               <GoogleSignIn />
                 </section>
     );
-    }
+    } else
 
     return (
 

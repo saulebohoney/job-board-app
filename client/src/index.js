@@ -7,7 +7,7 @@ import store from './store';
 import './index.css';
 import UpdateJob from './components/update';
 import ListJobs from  './components/list';
-import Welcome from './components/welcome';
+import GoogleSignIn from './components/welcome';
 import CreateJob from './components/create';
 import Home from './components/home';
 import {
@@ -24,7 +24,8 @@ const history = createBrowserHistory()
 
 ReactDOM.render(
   <Provider store={store}>  
-   <Router>
+    <Router> 
+      
      <div>
      
 <header>
@@ -44,7 +45,7 @@ ReactDOM.render(
        <NavLink exact to="/create">Create Job</NavLink> <br/>
        {/* <NavLink exact to="/update">Update Job</NavLink> <br/> */}
          <NavLink to ="/list">View All</NavLink>
-        <Route exact path="/" component={Home}/>
+        <Route exact path="/" component={App}/>
         <Route path="/update" component={UpdateJob}/> 
         <Route path="/list" component={ListJobs}/>
         <Route path="/create" component={CreateJob}/> 
