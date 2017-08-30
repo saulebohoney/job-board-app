@@ -8,14 +8,17 @@
   },
   "author": "saule",
   "license": "ISC",
- 
   "devDependencies": {
     "nodemon": "^1.11.0"
   },
-  "dependencies":{
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "dotenv": "^4.0.0",
+    "express": "^4.15.4",
+    "mongoose": "^4.11.9",
     "passport": "^0.4.0",
     "passport-google-oauth20": "^1.0.0",
     "passport-http-bearer": "^1.0.1",
-     "express": "^4.15.4"
+    "secret": "^1.0.2"
   }
 }

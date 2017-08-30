@@ -3,56 +3,79 @@ const express = require('express');
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const BearerStrategy = require('passport-http-bearer').Strategy;
+const mongoose = require('mongoose');
+const bodyParser = require ('body-parser');
+
+mongoose.Promise = global.Promise;
+
+require ('dotenv').config();
+const {DATABASE_URL, PORT} = process.env;
+const {Question, User} = require('./models');
 
 let secret = {
-  CLIENT_ID: process.env.CLIENT_ID,
-  CLIENT_SECRET: process.env.CLIENT_SECRET
-}
-
+    CLIENT_ID: process.env.CLIENT_ID,
+    CLIENT_SECRET: process.env.CLIENT_SECRET
+};
 if(process.env.NODE_ENV != 'production') {
-  secret = require('./secret');
+    secret = require('./secret');
 }
 
 const app = express();
 
-const database = {
-};
-
 app.use(passport.initialize());
+app.use(bodyParser.json());
 
+app.get('/api/users/:accessToken',  (req, res) => {
+    User
+    .findOne({accessToken: req.params.accessToken})
+    .then(user =>{
+        return res.json(user);
+    })
+    .catch(err => {
+        res.status(500).json({error: 'Something went wrong!!!'});
+    });
+});
+//Google Strategy
 passport.use(
     new GoogleStrategy({
         clientID:  secret.CLIENT_ID,
         clientSecret: secret.CLIENT_SECRET,
-        callbackURL: `/api/auth/google/callback`
+        callbackURL: '/api/auth/google/callback'
     },
     (accessToken, refreshToken, profile, cb) => {
-        // Job 1: Set up Mongo/Mongoose, create a User model which store the
-        // google id, and the access token
-        // Job 2: Update this callback to either update or create the user
-        // so it contains the correct access token
-        const user = database[accessToken] = {
-            googleId: profile.id,
-            accessToken: accessToken
-        };
-        return cb(null, user);
+        User.find({googleId:profile.id}, function(err,users){
+            if (!users.length){
+                User.create({
+                    googleId: profile.id,
+                    name:profile.displayName,
+                    accessToken: accessToken
+                }, function(err,user){
+                    return cb(null, user);
+                });
+            } else {
+                return cb(null,users[0]);
+            }
+        });
     }
-));
+    ));
 
+
+//Bearer Strategy
 passport.use(
     new BearerStrategy(
         (token, done) => {
-            // Job 3: Update this callback to try to find a user with a
-            // matching access token.  If they exist, let em in, if not,
-            // don't.
-            if (!(token in database)) {
-                return done(null, false);
-            }
-            return done(null, database[token]);
+            User.findOne({accessToken: token}, function(err, user){
+                if (err) {done(err);}
+                if(!user) {
+                    return done(null, false);
+                }
+                return done(null, user);
+            });
         }
     )
 );
 
+//Google Auth
 app.get('/api/auth/google',
     passport.authenticate('google', {scope: ['profile']}));
 
@@ -73,23 +96,32 @@ app.get('/api/auth/logout', (req, res) => {
     res.redirect('/');
 });
 
+//Authentication
 app.get('/api/me',
     passport.authenticate('bearer', {session: false}),
-    (req, res) => res.json({
-        googleId: req.user.googleId
-    })
+    (req, res) => {
+        return res.json({
+            hello:'it worked!',
+            googleId: req.user.googleId
+        })
+    }
 );
 
-app.get('/api/questions',
-    passport.authenticate('bearer', {session: false}),
-    (req, res) => res.json(['Question 1', 'Question 2'])
-);
+// app.get('/api/questions',
+//     passport.authenticate('bearer', {session: false}),
+//     (req, res) => {
+//         Question
+//         .find()
+//         .then(questions =>{
+//             return res.json(questions.map(question =>question.apiRepr()));
+//         })
+//         .catch(err => {
+//             res.status(500).json({error: 'Something went wrong!!!'});
+//         });
+//     });
 
-// Serve the built client
 app.use(express.static(path.resolve(__dirname, '../client/build')));
 
-// Unhandled requests which aren't for the API should serve index.html so
-// client-side routing using browserHistory can function
 app.get(/^(?!\/api(\/|$))/, (req, res) => {
     const index = path.resolve(__dirname, '../client/build', 'index.html');
     res.sendFile(index);
@@ -98,19 +130,29 @@ app.get(/^(?!\/api(\/|$))/, (req, res) => {
 let server;
 function runServer(port=3001) {
     return new Promise((resolve, reject) => {
+        mongoose.connect(DATABASE_URL,function(err){
+            if(err) {
+                return reject(err);
+            }
+        });
         server = app.listen(port, () => {
             resolve();
-        }).on('error', reject);
+        }).on('error', err=>{
+            mongoose.disconnect();
+            return reject(err);
+        });
     });
 }
 
 function closeServer() {
-    return new Promise((resolve, reject) => {
-        server.close(err => {
-            if (err) {
-                return reject(err);
-            }
-            resolve();
+    return mongoose.disconnect().then(() => {
+        return new Promise((resolve, reject) => {
+            server.close(err => {
+                if (err) {
+                    return reject(err);
+                }
+                resolve();
+            });
         });
     });
 }
