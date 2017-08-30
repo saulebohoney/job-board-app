@@ -48,7 +48,6 @@ passport.use(
     },
     (accessToken, refreshToken, profile, cb) => {
         User.find({googleId:profile.id}, function(err,users){
-            console.log(user);
             if (!users.length){
                 User.create({
                     googleId: profile.id,
@@ -121,13 +120,22 @@ app.get(/^(?!\/api(\/|$))/, (req, res) => {
 let server;
 function runServer(port=3001) {
     return new Promise((resolve, reject) => {
+        mongoose.connect(DATABASE_URL,function(err){
+            if(err){
+                return reject(err);
+            }
+        });
         server = app.listen(port, () => {
             resolve();
-        }).on('error', reject);
+        }).on('error', err=>{
+            mongoose.disconnect();
+            return reject(err);
     });
+});
 }
 
 function closeServer() {
+    return mongoose.disconnect().then(()=>{
     return new Promise((resolve, reject) => {
         server.close(err => {
             if (err) {
@@ -135,6 +143,7 @@ function closeServer() {
             }
             resolve();
         });
+    });
     });
 }
 
