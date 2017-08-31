@@ -10,6 +10,7 @@ import ListJobs from  './components/list';
 import GoogleSignIn from './components/welcome';
 import CreateJob from './components/create';
 import Home from './components/home';
+
 import {
   BrowserRouter as Router,
   Route,
@@ -31,7 +32,7 @@ ReactDOM.render(
 <header>
     <div class="navbar-fixed">
         <nav>
-            <div class="nav-wrapper"> <a href="#!" class="brand-logo">Sign Out</a>
+            <div class="nav-wrapper"> <a href='http://localhost:3001/api/auth/logout' class="brand-logo">Sign Out</a>
                 {/* <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a> */}
                 <ul class="right hide-on-med-and-down">
                   
