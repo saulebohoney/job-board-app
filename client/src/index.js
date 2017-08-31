@@ -32,7 +32,7 @@ ReactDOM.render(
 <header>
     <div class="navbar-fixed">
         <nav>
-            <div class="nav-wrapper"> <a href='http://localhost:3001/api/auth/logout' class="brand-logo">Sign Out</a>
+            <div class="nav-wrapper"> <a href='/api/auth/logout' class="brand-logo">Sign Out</a>
                 {/* <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a> */}
                 <ul class="right hide-on-med-and-down">
                   
