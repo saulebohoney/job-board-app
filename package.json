@@ -1,7 +1,7 @@
 {
-  "name": "thinkful-full-stack-template-v2",
+  "name": "job-board-app",
   "version": "0.1.0",
-  "description": "A full-stack starter template",
+  "description": "A full-stack application",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
@@ -18,7 +18,7 @@
     "server/node_modules",
     "client/node_modules"
   ],
-  "author": "Joe Turner <jturner@thinkful.com>",
+  "author": "Saule Bohoney",
   "license": "MIT",
   "dependencies": {
     "cross-env": "^5.0.5",
