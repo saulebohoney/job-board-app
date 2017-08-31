@@ -19,7 +19,7 @@ export const rejectGetUser=(error)=>({
 export const GET_USER='GET_USER';
 export const getUser=(accessToken)=>dispatch=>{
     dispatch(requestGetUser());
-    return fetch ('/api/me', {
+    return fetch ('/api/jobs', {
     
         headers: {
             'Authorization': `Bearer ${accessToken}`

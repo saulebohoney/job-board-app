@@ -11,7 +11,7 @@ require ('dotenv').config();
 mongoose.Promise = global.Promise;
 
 const {DATABASE_URL, PORT} = process.env;
-const {User} = require('./models');
+const {Job,User} = require('./models');
 
 let secret = {
     CLIENT_ID: process.env.CLIENT_ID,
@@ -106,6 +106,19 @@ app.get('/api/me',
         googleId: req.user.googleId
     })
 );
+
+app.get('/api/jobs',
+    passport.authenticate('bearer', {session: false}),
+    (req, res) => {
+        Job
+        .find()
+        .then(jobs =>{
+            return res.json(jobs.map(job=>job.apiRepr()));
+        })
+        .catch(err => {
+            res.status(500).json({error: 'Something went wrong!!!'});
+        });
+    });
 
 // Serve the built client
 app.use(express.static(path.resolve(__dirname, '../client/build')));

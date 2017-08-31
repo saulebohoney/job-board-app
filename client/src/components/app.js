@@ -1,9 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import * as Cookies from 'js-cookie';
-//import Header from './header';
-//import SignOut from './sign-out';
-//import AppInfo from './app-info';
 import CreateJob from './create';
 import ListJobs from './list';
 import UpdateJob from './update';
@@ -11,7 +8,7 @@ import GoogleSignIn from './welcome';
 import {getUser} from '../actions';
 import Home from './home';
 import SignOut from './sign-out';
-//import {BrowserRouter as Router, Route, Redirect} from 'react-router-dom';
+import {BrowserRouter as Router, Route, Redirect} from 'react-router-dom';
 
 
 class App extends React.Component {

@@ -6,9 +6,9 @@ const initialState = {
     currentUser:null,
     getUser: false, //If user tries to use an access token get them
     error: null, //If user has bad credentials reject them
-   // jobs:[],
-    //job:null,
-    //loading:false
+    jobs:[],
+    job:null,
+    loading:'loading'
 };
 
 export const reducer = (state=initialState,action) => {
