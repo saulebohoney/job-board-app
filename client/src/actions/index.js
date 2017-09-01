@@ -47,6 +47,7 @@ export const createJob=(job)=>({
     job
 });
 
+
 export const UPDATE_JOB='UPDATE_JOB';
 export const updateJob=(job)=>({
     type: UPDATE_JOB,

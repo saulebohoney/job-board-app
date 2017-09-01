@@ -2,29 +2,35 @@ import * as actions from '../actions';
 
 
 const initialState = {
-    // currentUser: {username:'', password:''},
     currentUser:null,
     getUser: false, //If user tries to use an access token get them
     error: null, //If user has bad credentials reject them
     jobs:[],
     job:null,
-    loading:'loading'
+    loading:false
 };
 
 export const reducer = (state=initialState,action) => {
     switch (action.type){
+
     case actions.REQUEST_GET_USER:
         return Object.assign({},state,{getUser:true});
+
     case actions.ALLOW_GET_USER:
         return Object.assign({},state,{currentUser: action.currentUser,getUser:false});
+
     case actions.REJECT_GET_USER:
         return Object.assign({},state,{error: action.error,getUser: false});
+
     case actions.FETCH_JOBS_REQUEST:
         return  Object.assign({}, state, {loading: true});
+
     case actions.FETCH_JOBS_SUCCESS:
-        return Object.assign({}, state, {restaurants: action.restaurant});
+        return Object.assign({}, state, {jobs: action.job});
+
     case actions.FETCH_JOBS_ERROR:
-        return Object.assign({}, state, {city: action.location});
+        return Object.assign({}, state, {jobs: action.job});
+
     case actions.CREATE_JOB:
         return Object.assign({}, state, {
             jobs: [...state.jobs, action.job]
@@ -41,7 +47,7 @@ export const reducer = (state=initialState,action) => {
         });
     case actions.DELETE_JOB:
         return Object.assign({}, state, {
-            items: state.items.filter(item => item.id !== action.item.id)
+            jobs: state.jobs.filter(job => job.id !== action.job.id)
         });    
     default:
         return state;

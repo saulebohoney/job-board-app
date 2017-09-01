@@ -7,10 +7,10 @@ import store from './store';
 import './index.css';
 import UpdateJob from './components/update';
 import ListJobs from  './components/list';
-import GoogleSignIn from './components/welcome';
+//import GoogleSignIn from './components/welcome';
 import CreateJob from './components/create';
-import Home from './components/home';
-import GoogleSignOut from './components/sign-out';
+//import Home from './components/home';
+//import GoogleSignOut from './components/sign-out';
 
 import {
   BrowserRouter as Router,
@@ -18,9 +18,9 @@ import {
   NavLink
 } from 'react-router-dom';
 
-import createBrowserHistory from 'history/createBrowserHistory'
+//import createBrowserHistory from 'history/createBrowserHistory'
 
-const history = createBrowserHistory()
+//const history = createBrowserHistory()
 
 
 

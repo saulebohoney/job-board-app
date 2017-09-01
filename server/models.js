@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 
 
 const jobSchema = mongoose.Schema({
+    user:{type: String, required: true},
     position: {type: String, required: true},
     JobDescription: {type: String, required: true},
     Company:{type: String, required: true},
@@ -15,6 +16,8 @@ const jobSchema = mongoose.Schema({
 
 jobSchema.methods.apiRepr = function() {
     return {
+        user:this.user,
+        id:this._id,
         position: this.position,
         JobDescription: this.JobDescription,
         Company:this.Company,

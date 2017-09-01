@@ -28,17 +28,6 @@ app.use(passport.initialize());
 app.use(bodyParser.json());
 
 
-app.get('/api/users/:accessToken',  (req, res) => {
-    User
-    .findOne({accessToken: req.params.accessToken})
-    .then(user =>{
-        return res.json(user);
-    })
-    .catch(err => {
-        res.status(500).json({error: 'Something went wrong!!!'});
-    });
-});
-
 //Google Strategy
 passport.use(
     new GoogleStrategy({
@@ -107,11 +96,47 @@ app.get('/api/me',
     })
 );
 
+//get user
+app.get('/api/users/:accessToken',  (req, res) => {
+    User
+    .findOne({accessToken: req.params.accessToken})
+    .then(user =>{
+        return res.json(user);
+    })
+    .catch(err => {
+        res.status(500).json({error: 'Something went wrong!!!'});
+    });
+});
+
+//add user to the database
+app.post('/api/users', (req, res) => {
+    const requiredFields = ['name'];
+    for (let i = 0; i < requiredFields; i++) {
+        const field = requiredFields[i];
+        if (!(field in req.body)) {
+            const message = `Missing\`${field}\` in request body`;
+            console.error(message);
+            return res.status(400).send(message);
+        }
+    }
+
+    User.create({name: req.body.name}).then(users => {
+        console.log(users);
+        res.status(201).json(users.apiRepr());
+    }).catch(err => {
+        console.error(err);
+        res.status(500).json({message: 'Internal server error'});
+    });
+});
+
+//get jobs
 app.get('/api/jobs',
     passport.authenticate('bearer', {session: false}),
     (req, res) => {
-        Job
-        .find()
+        Job 
+        .find({
+            user:req.user._id
+        })
         .then(jobs =>{
             return res.json(jobs.map(job=>job.apiRepr()));
         })
@@ -119,6 +144,74 @@ app.get('/api/jobs',
             res.status(500).json({error: 'Something went wrong!!!'});
         });
     });
+
+//add job to database
+app.post('/api/jobs',
+ passport.authenticate('bearer', {session: false}),
+    (req, res) => {
+        console.log(req.body);
+        req.body.user=req.user._id;
+        const requiredFields=['position','JobDescription','Company','NetworkingContact','Applied','LastContacted','Link','ResumeUsed','Notes'];
+        for (let i=0; i<requiredFields.length;i++){
+            const field=requiredFields[i];
+            if (!(field in req.body)) {
+                const message = `Missing \`${field}\` in request body`;
+                console.error(message);
+                return res.status(400).send(message);
+            }
+        }
+        Job
+    .create(req.body)
+    .then(createdJob=> res.status(201).json(createdJob.apiRepr()))
+    .catch(err => res.status(500).json({message: 'Something went wrong'}));
+    });
+
+
+ //update job 
+app.put('/api/jobs/:id',
+ passport.authenticate('bearer', {session: false}),
+     (req, res)=>{
+         if (!(req.params.id && req.body.id && req.params.id === req.body.id)) {
+             res.status(400).json({
+                 error: 'Request path id and request body id values must match'
+             });
+                
+         }      
+
+         const updated = {};
+         const updateableFields = ['LastContacted','Link','ResumeUsed','Notes'];
+         updateableFields.forEach(field => {
+             if (field in req.body){
+                 updated[field]=req.body[field];
+             }
+         });
+
+         Job
+    .findOneAndUpdate({
+        _id:req.params.id, 
+        user:req.user._id},
+        {$set: updated}, {new: true})
+    .exec()
+    .then(updatedJob=> res.status(201).json(updatedJob.apiRepr()))
+    .catch(err => res.status(500).json({message: 'Something went wrong'}));
+     });
+
+    
+//delete job
+app.delete('/api/jobs/:id',
+ passport.authenticate('bearer', {session: false}),
+(req, res) => {
+    Job
+    .findOneAndRemove({
+        _id:req.params.id, 
+        user:req.user._id})
+    .exec()
+    .then(() => {
+        console.log(`Deleted Job with id \`${req.params.ID}\``);
+        res.status(204).end();
+    });
+});
+
 
 // Serve the built client
 app.use(express.static(path.resolve(__dirname, '../client/build')));
@@ -143,20 +236,20 @@ function runServer(port=3001) {
         }).on('error', err=>{
             mongoose.disconnect();
             return reject(err);
+        });
     });
-});
 }
 
 function closeServer() {
     return mongoose.disconnect().then(()=>{
-    return new Promise((resolve, reject) => {
-        server.close(err => {
-            if (err) {
-                return reject(err);
-            }
-            resolve();
+        return new Promise((resolve, reject) => {
+            server.close(err => {
+                if (err) {
+                    return reject(err);
+                }
+                resolve();
+            });
         });
-    });
     });
 }
 

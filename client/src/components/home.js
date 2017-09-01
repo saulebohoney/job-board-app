@@ -1,6 +1,6 @@
 import React from 'react';
-import {connect} from 'react-redux';
-import GoogleSignIn from './welcome';
+//import {connect} from 'react-redux';
+//import GoogleSignIn from './welcome';
 
 class Home extends React.Component {
 
