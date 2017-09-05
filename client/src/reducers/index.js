@@ -49,6 +49,7 @@ export const reducer = (state=initialState,action) => {
         return Object.assign({}, state, {
             jobs: state.jobs.filter(job => job.id !== action.job.id)
         });    
+
     default:
         return state;
     }

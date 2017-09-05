@@ -131,7 +131,7 @@ app.post('/api/users', (req, res) => {
 
 //get jobs
 app.get('/api/jobs',
-    passport.authenticate('bearer', {session: false}),
+   passport.authenticate('bearer', {session: false}),
     (req, res) => {
         Job 
         .find({
