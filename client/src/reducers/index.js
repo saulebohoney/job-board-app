@@ -17,7 +17,7 @@ export const reducer = (state=initialState,action) => {
         return Object.assign({},state,{getUser:true});
 
     case actions.ALLOW_GET_USER:
-        return Object.assign({},state,{currentUser: action.currentUser,getUser:false});
+        return Object.assign({},state,{jobs: action.jobs,getUser:false});
 
     case actions.REJECT_GET_USER:
         return Object.assign({},state,{error: action.error,getUser: false});
