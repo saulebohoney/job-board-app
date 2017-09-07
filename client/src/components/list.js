@@ -6,7 +6,20 @@ import {connect} from 'react-redux';
 
 
 export class ListJobs extends React.Component {
+    // constructor(props) {
+    //     super(props);
+    //     this.state = {
+    //       color: props.initialColor
+    //     };
+    //   }
+      
+    constructor(props){
+        super(props);
+      this.props.dispatch(actions.fetchJobs())
+    }
 //this.context.router.transitionTo(e.target.href)
+
+
 
     updateJob(job){
         this.props.dispatch(actions.selectJob(job))

@@ -26,7 +26,7 @@ export const reducer = (state=initialState,action) => {
         return  Object.assign({}, state, {loading: true});
 
     case actions.FETCH_JOBS_SUCCESS:
-        return Object.assign({}, state, {jobs: action.job});
+        return Object.assign({}, state, {jobs: action.jobs});
 
     case actions.FETCH_JOBS_ERROR:
         return Object.assign({}, state, {jobs: action.job});

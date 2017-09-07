@@ -104,6 +104,7 @@ app.get('/api/users/:accessToken',  (req, res) => {
         return res.json(user);
     })
     .catch(err => {
+        
         res.status(500).json({error: 'Something went wrong!!!'});
     });
 });
@@ -141,6 +142,7 @@ app.get('/api/jobs',
             return res.json(jobs.map(job=>job.apiRepr()));
         })
         .catch(err => {
+
             res.status(500).json({error: 'Something went wrong!!!'});
         });
     });
@@ -157,13 +159,17 @@ app.post('/api/jobs',
             if (!(field in req.body)) {
                 const message = `Missing \`${field}\` in request body`;
                 console.error(message);
+    
                 return res.status(400).send(message);
             }
         }
         Job
     .create(req.body)
     .then(createdJob=> res.status(201).json(createdJob.apiRepr()))
-    .catch(err => res.status(500).json({message: 'Something went wrong'}));
+    .catch(err =>{
+        res.status(500).json({message: 'Something went wrong'});
+        console.log(err);
+    })
     });
 
 
