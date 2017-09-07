@@ -30,7 +30,14 @@ componentDidMount(){
    if (this.props.job) 
     { 
         this.positionInput.value= this.props.job.position;
-        //this.positionInput.value= this.props.job.position;
+        this.JobDescription.value=this.props.job.JobDescription;
+        this.Company.value=this.props.job.Company;
+        this.NetworkingContact.value=this.props.job.NetworkingContact;
+        this.Applied.value=this.props.job.Applied;
+        this.LastContacted.value=this.props.job.LastContacted;
+        this.Link.value=this.props.job.Link;
+        this.ResumeUsed.value=this.props.job.ResumeUsed;
+        this.Notes.value=this.props.job.Notes;
    }
 }
 

@@ -7,7 +7,8 @@ const initialState = {
     error: null, //If user has bad credentials reject them
     jobs:[],
     job:null,
-    loading:false
+    loading:false,
+    userLoggedIn:false
 };
 
 export const reducer = (state=initialState,action) => {
@@ -17,7 +18,7 @@ export const reducer = (state=initialState,action) => {
         return Object.assign({},state,{getUser:true});
 
     case actions.ALLOW_GET_USER:
-        return Object.assign({},state,{jobs: action.jobs,getUser:false});
+        return Object.assign({},state,{jobs: action.jobs,getUser:false,userLoggedIn:true});
 
     case actions.REJECT_GET_USER:
         return Object.assign({},state,{error: action.error,getUser: false});
@@ -29,7 +30,7 @@ export const reducer = (state=initialState,action) => {
         return Object.assign({}, state, {jobs: action.jobs});
 
     case actions.FETCH_JOBS_ERROR:
-        return Object.assign({}, state, {jobs: action.job});
+        return Object.assign({}, state, {jobs: action.jobs});
 
     case actions.CREATE_JOB:
         return Object.assign({}, state, {

@@ -27,14 +27,14 @@ ReactDOM.render(
   <Provider store={store}>  
     <Router>
     <div>
-    <Navbar brand='logo' right>              
+    <Navbar brand='logo' left>              
              <NavItem href='/create'>Create</NavItem>
 	         <NavItem href='/list'>View All</NavItem>
            <NavItem href='/api/auth/google'>Sign In</NavItem>
              <NavItem href='/api/auth/logout'>Sign Out</NavItem>
              </Navbar>
         
-        <Route exact path="/" component={Home}/>
+        <Route exact path="/" component={App}/>
         <Route path="/update" component={UpdateJob}/> 
         <Route path="/list" component={ListJobs}/>
         <Route path="/create" component={CreateJob}/>

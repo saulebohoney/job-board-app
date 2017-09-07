@@ -3,6 +3,7 @@ import React from 'react';
 import './css/create.css';
 import * as actions from '../actions';
 import {connect} from 'react-redux';
+import {Button, Icon} from 'react-materialize';
 
 export class CreateJob extends React.Component {
   
@@ -81,9 +82,8 @@ render() {
                 ref={(input) => { this.Notes= input; }} />
                  <br></br>
   
-               <input type="submit" value="Submit"/>
-
-    
+                 <Button waves='light'><input type="submit" value="Submit"/></Button>
+  
                 </form>
                 </div>
     )

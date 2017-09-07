@@ -41,10 +41,7 @@ export const getUser = (accessToken) => dispatch => {
     });
 };
 
-
-
 export const CREATE_JOB = 'CREATE_JOB';
-
 export const createJob = (job) => {
     return dispatch => {
         return fetch('/api/jobs', {
@@ -77,10 +74,32 @@ export const createJob = (job) => {
 
 
 export const UPDATE_JOB = 'UPDATE_JOB';
-export const updateJob = (job) => ({
-    type: UPDATE_JOB,
-    job
-});
+export const updateJob = (job) => {
+    return dispatch =>{
+    return fetch('/api/jobs', {
+        method: 'put',
+        body: JSON.stringify(job),
+        headers: {
+            'Authorization': `Bearer ${Cookies.get('accessToken')}`,
+            'Content-Type': 'application/json'
+        }
+    }).then(res => {
+        if (!res.ok) {
+            if (res.status === 401) {
+                Cookies.remove('accessToken');
+                return;
+            }
+            throw new Error(res.statusText);
+        }
+        return res.json();
+    }).then(job => {
+        return dispatch(selectJob(job));
+    })
+        .catch(error => {
+            dispatch(fetchJobError(error));
+        });
+};
+};
 
 export const SELECT_JOB = 'SELECT_JOB';
 export const selectJob = (job) => ({
@@ -112,15 +131,6 @@ export const fetchJobError = (jobs) => ({
     jobs
 });
 
-
-// export const GET_JOBS='GET_JOBS';
-
-// export function getJobs(jobs){
-//     return{
-//         type:GET_JOBS,
-//         jobs
-//     }
-// }
 
 export function fetchJobs(jobs) {
    return dispatch =>{
