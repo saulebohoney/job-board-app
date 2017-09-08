@@ -82,7 +82,7 @@ render() {
                 ref={(input) => { this.Notes= input; }} />
                  <br></br>
   
-                 <Button waves='light'><input type="submit" value="Submit"/></Button>
+                 <Button waves='light' class='light'><input type="submit"  value="Submit"/></Button>
   
                 </form>
                 </div>

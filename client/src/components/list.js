@@ -1,8 +1,8 @@
 import React from 'react';
-import './css/create.css';
 import * as actions from '../actions';
 import {connect} from 'react-redux';
-
+import {Button, Icon} from 'react-materialize';
+import './css/list.css';
 
 
 export class ListJobs extends React.Component {
@@ -43,9 +43,9 @@ constructor(props){
            
                <li key={index} > {job.position} 
 
-               <button type="button" value="text" onClick={updateJob.bind(thisClass,job)}>Update</button>
+               <Button waves='light' value="text" class="light" onClick={updateJob.bind(thisClass,job)}>Update</Button>
                <button type="button" value="text" onClick={deleteJob.bind(thisClass,job)}>Delete</button> 
-    
+            
                </li>     
        )   
         })

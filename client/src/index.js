@@ -29,21 +29,12 @@ ReactDOM.render(
     <div>
 
       <App/>
-      {/* <Navbar brand='logo' left>              
-             <NavItem href='/create'>Create</NavItem>
-	         <NavItem href='/list'>View All</NavItem>
-           {/* <NavItem href='/api/auth/google'>Sign In</NavItem> */}
-             {/* <NavItem href='/api/auth/logout'>Sign Out</NavItem>
-             </Navbar> */} 
-             {/* {this.props.children} */}
-        {/* <Route exact path="/" component={Home}/> */}
         <Route path="/update" component={UpdateJob}/> 
         <Route path="/list" component={ListJobs}/>
         <Route path="/create" component={CreateJob}/>
         <Route path="/home" component={Home}/> 
-   
-   
-  </div>
+        
+   </div>
   </Router>
    </Provider>, 
   document.getElementById('root')

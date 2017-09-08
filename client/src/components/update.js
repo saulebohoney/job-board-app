@@ -3,6 +3,7 @@ import React from 'react';
 import './css/create.css';
 import * as actions from '../actions';
 import {connect} from 'react-redux';
+import {Button, Icon} from 'react-materialize';
 
 
 
@@ -73,7 +74,7 @@ render() {
 
              
                 <label htmlFor="Applied"></label>
-                <input type="text" placeholder="Applied" readOnly
+                <input type="date" placeholder="Applied" readOnly
                 ref={(input) => { this.Applied = input; }} />
                  <br></br>
 
@@ -98,9 +99,8 @@ render() {
                  <label htmlFor="Notes"></label>
                 <input type="text" placeholder="Notes" required
                 ref={(input) => { this.Notes= input; }} />
-                 <br></br>
-  
-               <input type="submit" value="Update"/>
+ 
+                 <Button waves='light' class='light'>Update</Button>
 
                 </form>
           
