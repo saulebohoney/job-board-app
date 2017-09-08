@@ -30,9 +30,17 @@ export const reducer = (state=initialState,action) => {
         return Object.assign({}, state, {jobs: action.jobs});
 
     case actions.FETCH_JOBS_ERROR:
-        return Object.assign({}, state, {jobs: action.jobs});
+        return Object.assign({}, state, {error: action.error});
 
-    case actions.CREATE_JOB:
+
+    case actions.UPDATE_JOB_SUCCESS:
+    return Object.assign({}, state, {job: action.job});    
+    
+    
+    case actions.UPDATE_JOB_ERROR:
+    return Object.assign({}, state, {error: action.error});    
+    
+        case actions.CREATE_JOB:
         return Object.assign({}, state, {
             jobs: [...state.jobs, action.job]
         });
@@ -42,6 +50,7 @@ export const reducer = (state=initialState,action) => {
                 job.id === action.job.id ? action.job : job
             )
         });
+
     case actions.SELECT_JOB:
         return Object.assign({}, state, {
             job: action.job   
@@ -50,6 +59,11 @@ export const reducer = (state=initialState,action) => {
         return Object.assign({}, state, {
             jobs: state.jobs.filter(job => job.id !== action.job.id)
         });    
+        case actions.DELETE_JOB_SUCCESS:
+        return Object.assign({}, state, {job: action.job}); 
+
+        case actions.DELETE_JOB_ERROR:
+        return Object.assign({}, state, {job: action.error});    
 
     default:
         return state;

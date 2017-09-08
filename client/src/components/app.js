@@ -1,13 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import * as Cookies from 'js-cookie';
-//import CreateJob from './create';
-//import ListJobs from './list';
-//import UpdateJob from './update';
+import CreateJob from './create';
+import ListJobs from './list';
+import UpdateJob from './update';
 import GoogleSignIn from './welcome';
 import { getUser } from '../actions';
 import Home from './home';
-
+import {Navbar,NavItem} from 'react-materialize';
 
 import {
     BrowserRouter as Router,
@@ -33,7 +33,18 @@ class App extends React.Component {
         return (
 
             <section className="MainPage">
-                <Home />
+                {/* <Home /> */}
+                 <Navbar brand='logo' left>              
+             <NavItem href='/create'>Create</NavItem>
+	         <NavItem href='/list'>View All</NavItem>
+              <NavItem href='/api/auth/logout'>Sign Out</NavItem>
+             </Navbar> 
+             {/* {this.props.children}
+        <Route exact path="/" component={Home}/>
+        <Route path="/update" component={UpdateJob}/> 
+        <Route path="/list" component={ListJobs}/>
+        <Route path="/create" component={CreateJob}/>
+        <Route path="/home" component={Home}/>  */}
 
             </section>
         );
@@ -42,5 +53,6 @@ class App extends React.Component {
 
 const mapStateToProps = state => ({
     userLoggedIn: state.userLoggedIn,
+    // currentUser:state.currentUser,
 });
 export default connect(mapStateToProps)(App);

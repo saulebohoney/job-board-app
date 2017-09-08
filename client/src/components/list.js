@@ -18,20 +18,34 @@ constructor(props){
         this.props.history.push('/update');
        
     }
+
+    deleteJob(job){
+        let thisClass=this;
+        this.props.dispatch(actions.deleteJob(job))
+        .then (function(){
+        thisClass.props.dispatch(actions.fetchJobs())
+        })
+        
+    }
     
     render () { 
         let jobs;
     
         
         if (this.props.jobs){
+            
             let updateJob = this.updateJob;
             let thisClass = this;
+            let deleteJob=this.deleteJob;
 
-        jobs= this.props.jobs.map (function (job) {
+        jobs= this.props.jobs.map (function (job, index) {
        return (
            
-               <li> {job.position}  
-               <button type="button" value="text" onClick={updateJob.bind(thisClass,job)}>Update</button> 
+               <li key={index} > {job.position} 
+
+               <button type="button" value="text" onClick={updateJob.bind(thisClass,job)}>Update</button>
+               <button type="button" value="text" onClick={deleteJob.bind(thisClass,job)}>Delete</button> 
+    
                </li>     
        )   
         })

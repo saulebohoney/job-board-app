@@ -76,7 +76,7 @@ export const createJob = (job) => {
 export const UPDATE_JOB = 'UPDATE_JOB';
 export const updateJob = (job) => {
     return dispatch =>{
-    return fetch('/api/jobs', {
+    return fetch(`/api/jobs/${job.id}`, {
         method: 'put',
         body: JSON.stringify(job),
         headers: {
@@ -93,10 +93,10 @@ export const updateJob = (job) => {
         }
         return res.json();
     }).then(job => {
-        return dispatch(selectJob(job));
+        return dispatch(updateJobSuccess(job));
     })
         .catch(error => {
-            dispatch(fetchJobError(error));
+            dispatch(updateJobError(error));
         });
 };
 };
@@ -108,10 +108,32 @@ export const selectJob = (job) => ({
 });
 
 export const DELETE_JOB = 'DELETE_JOB';
-export const deleteJob = (job) => ({
-    type: DELETE_JOB,
-    job
-});
+export const deleteJob = (job) => {
+    return dispatch =>{
+        return fetch(`/api/jobs/${job.id}`, {
+            method: 'delete',
+            body: JSON.stringify(job),
+            headers: {
+                'Authorization': `Bearer ${Cookies.get('accessToken')}`,
+                'Content-Type': 'application/json'
+            }
+        }).then(res => {
+            if (!res.ok) {
+                if (res.status === 401) {
+                    Cookies.remove('accessToken');
+                    return;
+                }
+                throw new Error(res.statusText);
+            }
+            return res.json();
+        }).then(job => {
+            return dispatch(deleteJobSuccess(job));
+        })
+            .catch(error => {
+                dispatch(deleteJobError(error));
+            });
+    };
+    };
 
 export const FETCH_JOBS_REQUEST = 'FETCH_JOBS_REQUEST';
 export const fetchJob = (job) => ({
@@ -125,13 +147,23 @@ export const fetchJobSuccess = (jobs) => ({
     jobs
 });
 
-export const FETCH_JOBS_ERROR = 'FETCH_JOBS_ERROR';
-export const fetchJobError = (jobs) => ({
-    type: FETCH_JOBS_ERROR,
-    jobs
+export const UPDATE_JOB_SUCCESS = 'UPDATE_JOB_SUCCESS';
+export const updateJobSuccess = (job) => ({
+    type: UPDATE_JOB_SUCCESS,
+    job
 });
 
+export const UPDATE_JOB_ERROR = 'UPDATE_JOB_ERROR';
+export const updateJobError = (error) => ({
+    type: UPDATE_JOB_ERROR,
+    error
+});
 
+export const FETCH_JOBS_ERROR = 'FETCH_JOBS_ERROR';
+export const fetchJobError = (error) => ({
+    type: FETCH_JOBS_ERROR,
+    error
+});
 export function fetchJobs(jobs) {
    return dispatch =>{
     return fetch('/api/jobs', {
@@ -160,3 +192,14 @@ export function fetchJobs(jobs) {
 
 
 };
+export const DELETE_JOB_SUCCESS = 'DELETE_JOB_SUCCESS';
+export const deleteJobSuccess = (job) => ({
+    type: DELETE_JOB_SUCCESS,
+    job
+});
+
+export const DELETE_JOB_ERROR = 'DELETE_JOB_ERROR';
+export const deleteJobError = (error) => ({
+    type: DELETE_JOB_ERROR,
+    error
+});
