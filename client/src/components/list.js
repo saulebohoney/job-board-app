@@ -3,6 +3,8 @@ import * as actions from '../actions';
 import {connect} from 'react-redux';
 import {Button, Icon} from 'react-materialize';
 import './css/list.css';
+import {Collection, CollectionItem} from 'react-materialize';
+
 
 
 export class ListJobs extends React.Component {
@@ -41,20 +43,20 @@ constructor(props){
         jobs= this.props.jobs.map (function (job, index) {
        return (
            
-               <li key={index} > {job.position} 
-
+               <CollectionItem key={index} > {job.position} 
+                <div>
                <Button waves='light' value="text" class="light" onClick={updateJob.bind(thisClass,job)}>Update</Button>
-               <button type="button" value="text" onClick={deleteJob.bind(thisClass,job)}>Delete</button> 
-            
-               </li>     
+               <Button waves='light' value="text" class="light" onClick={deleteJob.bind(thisClass,job)}>Delete</Button> 
+               </div>
+               </CollectionItem>     
        )   
         })
     }
 
     return (
-        <div>
-       {jobs}
-        </div>);
+        <Collection>
+            {jobs}
+        </Collection>);
     }
 
 }
