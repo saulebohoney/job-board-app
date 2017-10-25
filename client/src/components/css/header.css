@@ -1,8 +1,20 @@
 body {
   margin: 0;
   padding: 5px;
-  font-family: sans-serif;
+  font-family: sans;
   /* background: url('https://image.freepik.com/free-vector/jobs-background-design_1200-196.jpg');  */
   background-size: cover;
   height: 100vh;
+  background-color: #575757;
+ 
+}
+
+h1{
+  text-align: center;
+  margin-top:20%;
+}
+
+.google-button{
+  text-align: center;
+  vertical-align: center;
 }
